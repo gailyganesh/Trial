@@ -1,10 +1,9 @@
 #!/bin/bash -e
 # build script for the project
-ROOT_DIR=$PWD
+export ROOT_DIR=$PWD
 TOOLS_DIR=$ROOT_DIR/tools
 CMAKE=$TOOLS_DIR/cmake/bin/cmake
 BUILD_DIR=$ROOT_DIR/build
-export INSTALL_DIR=$ROOT_DIR
 DEBUG_BUILD_DIR=$BUILD_DIR/debug
 RELEASE_BUILD_DIR=$BUILD_DIR/release 
 BUILD_TYPE=All
@@ -95,7 +94,7 @@ function clean()
 {
     echo "Clean the build and bin directory"
     rm -rf ${BUILD_DIR}
-    rm -rf ${INSTALL_DIR}
+    rm -rf ${ROOT_DIR}/bin
 }
 
 while (( "$#" )); do
