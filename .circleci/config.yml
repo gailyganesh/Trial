@@ -2,8 +2,8 @@ version: 2
 jobs:
     build:
         docker:
-          - image: "gailyganesh/trial:tagname"
-          - auth:
+            - image: gailyganesh/trial:tagname
+            auth:
                 username: "gailyganesh"
                 password: $DOCKER_HUB_PSWD
         steps:
