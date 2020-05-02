@@ -1,11 +1,12 @@
 #!/bin/bash -e
 # build script for the project
-export ROOT_DIR=$PWD
+ROOT_DIR=$PWD
 TOOLS_DIR=$ROOT_DIR/tools
 CMAKE=$TOOLS_DIR/cmake/bin/cmake
 BUILD_DIR=$ROOT_DIR/build
+RELEASE_BUILD_DIR=$BUILD_DIR/release
 DEBUG_BUILD_DIR=$BUILD_DIR/debug
-RELEASE_BUILD_DIR=$BUILD_DIR/release 
+INSTALL_DIR=$ROOT_DIR/bin 
 BUILD_TYPE=All
 
 while getopts ":hb:" opt; do
@@ -61,7 +62,16 @@ GLOBAL_CMAKE_FLAGS="${CMAKE_FLAGS} -DCMAKE_C_COMPILER:PATH=${C_COMPILER_PATH}"
 
 function generate()
 {
-    generate_release
+    if [ "$BUILD_TYPE" = "Release" ];
+    then
+        generate_release
+    elif [ "$BUILD_TYPE" = "Debug" ]
+    then
+        generate_debug
+    else
+        generate_release
+        generate_debug
+    fi
 }
 
 function generate_release()
@@ -69,8 +79,8 @@ function generate_release()
     echo "generate the project in Release"
 
     local cmake_flags=""
-    cmake_flags="${GLOBAL_CMAKE_FLAGS} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_DIR}"
-    cmake_flags="${CMAKE_FLAGS} -DCMAKE_BUILD_TYPE=Release"
+    cmake_flags="${GLOBAL_CMAKE_FLAGS} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_DIR}/release"
+    cmake_flags="${cmake_flags} -DCMAKE_BUILD_TYPE=Release"
     cmake_flags="${cmake_flags} ${CMAKE_ADDITIONAL_FLAGS}"
     cmake_flags="${cmake_flags} -S ${ROOT_DIR}"
     cmake_flags="${cmake_flags} -B ${RELEASE_BUILD_DIR}"
@@ -78,16 +88,46 @@ function generate_release()
     ${CMAKE} ${cmake_flags}
 }
 
+function generate_debug()
+{
+    echo "generate the project in Debug: ${DEBUG_BUILD_DIR}"
+
+    local cmake_flags=""
+    cmake_flags="${GLOBAL_CMAKE_FLAGS} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_DIR}/debug"
+    cmake_flags="${cmake_flags} -DCMAKE_BUILD_TYPE=Debug"
+    cmake_flags="${cmake_flags} ${CMAKE_ADDITIONAL_FLAGS}"
+    cmake_flags="${cmake_flags} -S ${ROOT_DIR}"
+    cmake_flags="${cmake_flags} -B ${DEBUG_BUILD_DIR}"
+
+    ${CMAKE} ${cmake_flags}
+}
+
 function build()
 {
-    build_release
+    if [ "$BUILD_TYPE" = "Release" ];
+    then
+        build_release
+    elif [ "$BUILD_TYPE" = "Debug" ]
+    then
+        build_debug
+    else
+        build_release
+        build_debug
+    fi
 }
 
 function build_release()
 {
     echo "start building the project in Release"
-    ${CMAKE} --build ${RELEASE_BUILD_DIR} -j${CMAKE_PARALLEL} -v #--target install
+    ${CMAKE} --build ${RELEASE_BUILD_DIR} -j${CMAKE_PARALLEL} -v
     ${CMAKE} --build ${RELEASE_BUILD_DIR} --target install -j${CMAKE_PARALLEL} -v
+}
+
+function build_debug()
+{
+    echo "start building the project in Debug"
+    ${CMAKE} --build ${DEBUG_BUILD_DIR} -j${CMAKE_PARALLEL} -v
+    ${CMAKE} --build ${DEBUG_BUILD_DIR} --target install -j${CMAKE_PARALLEL} -v
 }
 
 function clean()
