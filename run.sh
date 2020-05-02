@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # build script for the project
 ROOT_DIR=$PWD
-TOOLS_DIR=$ROOT_DIR/tools
+TOOLS_DIR=~/tools
 CMAKE=$TOOLS_DIR/cmake/bin/cmake
 BUILD_DIR=$ROOT_DIR/build
 RELEASE_BUILD_DIR=$BUILD_DIR/release

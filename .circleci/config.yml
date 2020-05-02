@@ -1,0 +1,8 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: gailyganesh/trial:tagname
+        steps:
+            - checkout
+            - run: echo "Hello world"
