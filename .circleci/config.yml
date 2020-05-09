@@ -15,3 +15,8 @@ jobs:
                 command: |
                     cd
                     ls -a
+            - run:
+                name: Run build script
+                command: |
+                    cd ~/project
+                    ./run.sh
