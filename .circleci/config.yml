@@ -16,7 +16,17 @@ jobs:
                     cd
                     ls -a
             - run:
-                name: Run build script
+                name: clean the project
                 command: |
                     cd ~/project
-                    ./run.sh
+                    ./run.sh clean
+            - run:
+                name: generate the project
+                command: |
+                    cd ~/project
+                    ./run.sh generate
+            - run:
+                name: build the project
+                command: |
+                    cd ~/project
+                    ./run.sh build
