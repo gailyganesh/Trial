@@ -52,8 +52,8 @@ function usage () {
 [ $# -ge 1 ] || { usage >&2; exit 1; }
 
 # Configure compiler path 
-CXX_COMPILER_PATH=/usr/bin/g++-5
-C_COMPILER_PATH=/usr/bin/gcc-5
+CXX_COMPILER_PATH=/usr/bin/g++-7.5
+C_COMPILER_PATH=/usr/bin/gcc-7.5
 
 # Configure global camke flag
 CMAKE_PARALLEL=${CMAKE_PARALLEL:-4}
