@@ -3,9 +3,6 @@ jobs:
     build:
         docker:
             - image: circleci/node:10-browsers
-            - auth:
-                username: "gailyganesh"
-                password: $DOCKER_HUB_PSWD
         steps:
             - checkout
             - run: 
