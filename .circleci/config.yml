@@ -11,7 +11,6 @@ jobs:
                     ls -al
                     echo "That is ur code"
             - run:
-                name: PWD
+                name: check tools directory exist
                 command: |
-                    pwd
-                    echo "Current direc" pwd 
+                    [ -d "~/tools" ] && echo "Directory ~/tools exists." 
