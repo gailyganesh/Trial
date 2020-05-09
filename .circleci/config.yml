@@ -8,6 +8,4 @@ jobs:
                 password: $DOCKER_HUB_PSWD
         steps:
             - checkout
-            - shell: /bin/sh
-            - command: |
-                echo Hello world
+            - run: echo "Hello world"
