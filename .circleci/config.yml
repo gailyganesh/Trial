@@ -3,7 +3,7 @@ jobs:
     build:
         docker:
             - image: https://hub.docker.com/repository/docker/gailyganesh/trial:latest
-            auth:
+            - auth:
                 username: "gailyganesh"
                 password: $DOCKER_HUB_PSWD
         steps:
