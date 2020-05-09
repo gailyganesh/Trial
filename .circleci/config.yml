@@ -10,3 +10,8 @@ jobs:
                 command: |
                     ls -al
                     echo "That is ur code"
+            - run:
+                name: PWD
+                command: |
+                    pwd
+                    echo "Current direc" pwd 
