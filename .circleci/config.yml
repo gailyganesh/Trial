@@ -2,7 +2,7 @@ version: 2
 jobs:
     build:
         docker:
-            - image: gailyganesh/trial:latest
+            - image: https://hub.docker.com/repository/docker/gailyganesh/trial:latest
             auth:
                 username: "gailyganesh"
                 password: $DOCKER_HUB_PSWD
